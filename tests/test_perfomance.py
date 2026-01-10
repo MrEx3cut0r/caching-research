@@ -9,7 +9,7 @@ class TestPerformance:
     async def test_simple_load(self):
         async with aiohttp.ClientSession() as session:
             times = []
-            for i in range(10):
+            for i in range(40):
                 start = time.time()
                 async with session.get("http://localhost:8000/health") as response:
                     assert response.status == 200
@@ -61,7 +61,7 @@ class TestPerformance:
     @pytest.mark.asyncio
     async def test_strategy_comparison(self):
         async with aiohttp.ClientSession() as session:
-            strategies = ["cache_aside", "write_through"]
+            strategies = ["cache_aside", "write_through", "write_behind", "read_through"]
             results = {}
             
             for strategy in strategies:

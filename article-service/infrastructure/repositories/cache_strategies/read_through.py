@@ -5,7 +5,7 @@ from domain.ports.cache_strategy import ICacheStrategy
 from domain.entities.article import Article
 from infrastructure.repositories.postgres_article_repo import PostgresArticleRepository
 
-class WriteThroughStrategy(ICacheStrategy):
+class ReadThroughStrategy(ICacheStrategy):
     def __init__(self, redis_host='redis', redis_port=6379):
         try:
             self.redis = redis.Redis(host=redis_host, port=redis_port, decode_responses=True, socket_connect_timeout=1, socket_timeout=1)
@@ -29,16 +29,18 @@ class WriteThroughStrategy(ICacheStrategy):
                     return Article(**data)
                 except:
                     pass
-        return None
+        
+        article = self.db.find_by_id(article_id)
+        if article and self.redis:
+            try:
+                article_dict = article.to_dict()
+                self.redis.setex(f"article:{article_id}", 300, json.dumps(article_dict))
+            except:
+                pass
+        return article
     
     def save_article(self, article):
         self.db.save(article)
-        if self.redis:
-            try:
-                article_dict = article.to_dict()
-                self.redis.setex(f"article:{article.id}", 300, json.dumps(article_dict))
-            except:
-                pass
 
 class MockRepository:
     def __init__(self):
