@@ -1,8 +1,8 @@
 # Cache Strategies Research
 
-🔬 Comparative analysis of caching strategies for high-load backend systems
+Comparative analysis of caching strategies for high-load backend systems
 
-## 📊 Key Results
+## Key Results
 | Strategy | Avg Latency | Hit Rate | Consistency | Best For |
 |----------|-------------|----------|-------------|----------|
 | Cache-Aside | 8.2 ms | 92% | Eventual | Read-heavy (90/10) |
@@ -10,7 +10,7 @@
 | Write-Behind | 3.1 ms | 95% | Eventual | Write-heavy systems |
 | Read-Through | 9.8 ms | 96% | Eventual | Smart cache systems |
 
-## 🚀 Quick Start
+## Quick Start
 ```bash
 # Clone repository
 git clone https://github.com/your-username/cache-research
