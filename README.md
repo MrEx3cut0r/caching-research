@@ -15,7 +15,7 @@ Comparative analysis of caching strategies for high-load backend systems
 # Clone repository
 git clone https://github.com/your-username/cache-research
 
-cd cache-research/code
+cd cache-research/
 docker-compose up -d
 # run tests
 python3 -m pytest
